@@ -39,6 +39,9 @@
     <ClInclude Include="UICanvas.h">
       <Filter>Header Files</Filter>
     </ClInclude>
+    <ClInclude Include="AmmoCrate.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="pch.cpp">

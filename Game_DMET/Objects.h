@@ -168,6 +168,10 @@ public:
 
 	void SetActive(bool active)
 	{
+		if (active == false)
+		{
+			OnDisabled();
+		}
 		enabled = active;
 	}
 
@@ -199,9 +203,16 @@ public:
 		// printf("%s\n", "wrong");
 	}
 
+	virtual void RestartGame()
+	{
+
+	}
 	virtual void Display()
 	{
 	}
+
+	virtual void OnDisabled()
+	{ }
 
 	void CalculateCollider()
 	{

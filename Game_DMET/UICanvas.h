@@ -30,6 +30,7 @@ public:
 	{
 		hp = player->HP;
 		currentAmmo = player->ammo;
+		score = player->score;
 	}
 	void print(int x, int y, const char *string, float c1, float c2, float c3)
 	{

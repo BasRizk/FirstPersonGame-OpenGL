@@ -99,4 +99,10 @@ public:
 		glColor3d(1, 0, 0);
 		glutSolidCube(1);
 	}
+
+	void OnDisabled() override
+	{
+		printf("SCORE");
+		((Player*)player)->score += 5;
+	}
 };

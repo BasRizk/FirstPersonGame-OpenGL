@@ -120,15 +120,16 @@ public:
 	GameObject * spawner;
 	int HP;
 	int ammo;
+	int score;
 
 	Player()
 	{
-
+		
 	}
 	Player(GameObject * _spawner)
 	{
 		spawner = _spawner;
-		
+	
 	}
 
 	void TakeDamage(float value)
@@ -140,6 +141,11 @@ public:
 	{
 		cameraHolder = CameraHolder();
 		addChild(&cameraHolder, true);
+		RestartGame();
+	}
+
+	void RestartGame()
+	{
 		transform.position = Vector3f(0, 0, 0);
 		speed = 0.1;
 		walkHopDirection = 0.5f;
@@ -148,13 +154,13 @@ public:
 		colliderRadius = 4;
 		HP = 100;
 		ammo = 30;
+		score = 0;
 		movementDirection = STOP;
 	}
 
 	void Update() override
 	{
 		move();
-		printf("%d \n", HP);
 		CalculateCollider();
 	}
 
