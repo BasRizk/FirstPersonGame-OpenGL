@@ -1,4 +1,20 @@
 #pragma once
+
+class Color
+{
+public:
+	float r;
+
+	float g;
+
+	float b;
+
+	float a;
+
+	Color() {}
+	Color(float red, float green, float blue) : r(red / 100.0f), g(green / 100.0f), b(blue / 100.0f), a(1) {}
+	Color(float red, float green, float blue, float alpha) : r(red), g(green), b(blue), a(alpha) {}
+};
 class Vector3f
 {
 public:
@@ -48,6 +64,11 @@ public: static Vector3f down;
 	{
 		return Vector3f(y * v.z - z * v.y, z * v.x - x * v.z, x * v.y - y * v.x);
 	}
+
+	float  dot(Vector3f v)
+	{
+		return x * v.x + y * v.y + z * v.z;
+	}
 };
 
 //Vector3f Vector3f::up = Vector3f(0, 1, 0);
@@ -56,3 +77,9 @@ Vector3f Vector3f::forward = Vector3f(0, 0, 1);
 Vector3f Vector3f::backward = Vector3f(0, 0, -1);
 Vector3f Vector3f::right = Vector3f(1, 0, 0);
 Vector3f Vector3f::left = Vector3f(-1, 0, 0);
+
+
+//void DrawRectangle(float x, float y, float height, float width, bool midPoint)
+//{
+//	DrawRectangle(x, y, height, width, midPoint, Color(1, 1, 1));
+//}

@@ -8,12 +8,12 @@ class EnemySpawner : public GameObject {
 	float timer;
 
 public:
-	Transform * player;
+	GameObject * player;
 	EnemySpawner()
 	{
 
 	}
-	EnemySpawner(Transform * _player)
+	EnemySpawner(GameObject * _player)
 	{
 		player = _player;
 	}
@@ -21,7 +21,7 @@ public:
 	{
 		transform.position = Vector3f(0,0,0);
 		spawnTime = 3000;
-		timer = spawnTime;
+		timer = 2000;
 		enemySpeed = 0.05;
 		spawnRadius = 10;
 	}
@@ -33,7 +33,7 @@ public:
 			float angle = rand() % 360;
 			Vector3f position = Vector3f(spawnRadius * cos(DEG2RAD(angle)), 0, spawnRadius * sin(DEG2RAD(angle)));
 			
-			Enemy * enemy = new Enemy(enemySpeed, position, player);
+			Enemy * enemy = new Enemy(enemySpeed, position, player , this);
 
 			addChild(enemy, false);
 

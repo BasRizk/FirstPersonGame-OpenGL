@@ -163,6 +163,7 @@
     <ClInclude Include="Objects.h" />
     <ClInclude Include="pch.h" />
     <ClInclude Include="Tools.h" />
+    <ClInclude Include="UICanvas.h" />
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="Game_DMET.cpp" />
