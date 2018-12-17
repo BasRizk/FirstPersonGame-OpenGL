@@ -160,7 +160,8 @@ public:
 
 	void Update() override
 	{
-		move();
+		
+		move(false);
 		CalculateCollider();
 	}
 
@@ -179,9 +180,11 @@ public:
 		}		
 	}
 
-	void move()
+	void move(bool collided)
 	{
-		
+		float direction = 1;
+		if (collided)
+			direction = -1;
 		Vector3f fwd = transform.Forward() - transform.position;
 		fwd.y = 0;
 		fwd = fwd.unit();
@@ -228,7 +231,7 @@ public:
 			}
 			else
 				timer -= deltaTime;
-			transform.Translate(fwd * speed);
+			transform.Translate(fwd * speed * direction);
 			transform.Translate(Vector3f(0,1,0) * speed * walkHopDirection);
 			break;
 		case BACKWARD:
@@ -240,7 +243,7 @@ public:
 			}
 			else
 				timer -= deltaTime;
-			transform.Translate(fwd * -speed);
+			transform.Translate(fwd * -speed * direction);
 			transform.Translate(Vector3f(0, 1, 0) * speed * walkHopDirection);
 			break;
 		case RIGHT:
@@ -253,7 +256,7 @@ public:
 			else
 				timer -= deltaTime;
 			fwd = fwd.cross(Vector3f(0,1,0));
-			transform.Translate(fwd.unit() * speed);
+			transform.Translate(fwd.unit() * speed * direction);
 			transform.Translate(Vector3f(0, 1, 0) * speed * walkHopDirection);
 			break;
 		case LEFT:
@@ -266,7 +269,7 @@ public:
 			else
 				timer -= deltaTime;
 			fwd = fwd.cross(Vector3f(0,1,0));
-			transform.Translate(fwd.unit() * -speed);
+			transform.Translate(fwd.unit() * -speed * direction);
 			transform.Translate(Vector3f(0, 1, 0) * speed * walkHopDirection);
 			break;
 		default:
