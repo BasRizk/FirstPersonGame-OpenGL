@@ -99,3 +99,46 @@ public:
 		addChild(&chairBackStick[3], true);
 	}
 };
+
+class WoodTable : public GameObject {
+
+public:
+	WoodPrism tableLeg[4];
+	WoodPrism tablePlate;
+	WoodPrism chairBackStick[4];
+
+	WoodTable()
+	{
+		transform.position = Vector3f(1, -0.5, 0);
+	}
+
+	void Start() override
+	{
+
+		float width, height, thickness, height_offset;
+		width = 0.5; height = 0.5;
+		thickness = 0.08;
+		height_offset = 0.22;
+		tablePlate = WoodPrism(width, thickness, width+0.1);
+		tablePlate.transform.position = Vector3f(0, height_offset, 0);
+		addChild(&tablePlate, true);
+
+
+		width = width / 2 - 0.05;
+		height = 0.5;
+		thickness = 0.03;
+
+		tableLeg[0] = WoodPrism(thickness, height, thickness);
+		tableLeg[0].transform.position = Vector3f(width, 0, width);
+		addChild(&tableLeg[0], true);
+		tableLeg[1] = WoodPrism(thickness, height, thickness);
+		tableLeg[1].transform.position = Vector3f(-width, 0, width);
+		addChild(&tableLeg[1], true);
+		tableLeg[2] = WoodPrism(thickness, height, thickness);
+		tableLeg[2].transform.position = Vector3f(-width, 0, -width);
+		addChild(&tableLeg[2], true);
+		tableLeg[3] = WoodPrism(thickness, height, thickness);
+		tableLeg[3].transform.position = Vector3f(width, 0, -width);
+		addChild(&tableLeg[3], true);
+	}
+};
