@@ -62,7 +62,7 @@ public:
 
 		
 		width = width / 2 - 0.05;
-		height = 0.42;
+		height = 0.40;
 		thickness = 0.03;
 		
 		chairLeg[0] = WoodPrism(thickness, height, thickness);
@@ -105,7 +105,6 @@ class WoodTable : public GameObject {
 public:
 	WoodPrism tableLeg[4];
 	WoodPrism tablePlate;
-	WoodPrism chairBackStick[4];
 
 	WoodTable()
 	{
@@ -125,7 +124,7 @@ public:
 
 
 		width = width / 2 - 0.05;
-		height = 0.5;
+		height = 0.3;
 		thickness = 0.03;
 
 		tableLeg[0] = WoodPrism(thickness, height, thickness);

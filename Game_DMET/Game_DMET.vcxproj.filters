@@ -39,16 +39,10 @@
     <ClInclude Include="UICanvas.h">
       <Filter>Header Files</Filter>
     </ClInclude>
-    <ClInclude Include="BlenderModel.h">
-      <Filter>Header Files</Filter>
-    </ClInclude>
     <ClInclude Include="GLTexture.h">
       <Filter>Header Files</Filter>
     </ClInclude>
     <ClInclude Include="Model_3DS.h">
-      <Filter>Header Files</Filter>
-    </ClInclude>
-    <ClInclude Include="WoodChair.h">
       <Filter>Header Files</Filter>
     </ClInclude>
     <ClInclude Include="glaux.h">
@@ -64,6 +58,9 @@
       <Filter>Header Files</Filter>
     </ClInclude>
     <ClInclude Include="GroundGrass.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="Furnitures.h">
       <Filter>Header Files</Filter>
     </ClInclude>
   </ItemGroup>

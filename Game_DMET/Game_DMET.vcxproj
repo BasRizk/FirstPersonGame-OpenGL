@@ -159,7 +159,6 @@
     </Link>
   </ItemDefinitionGroup>
   <ItemGroup>
-    <ClInclude Include="BlenderModel.h" />
     <ClInclude Include="Camera.h" />
     <ClInclude Include="Enemy.h" />
     <ClInclude Include="EnemySpawner.h" />
@@ -175,7 +174,7 @@
     <ClInclude Include="Tools.h" />
     <ClInclude Include="Tree.h" />
     <ClInclude Include="UICanvas.h" />
-    <ClInclude Include="WoodChair.h" />
+    <ClInclude Include="Furnitures.h" />
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="Game_DMET.cpp" />
