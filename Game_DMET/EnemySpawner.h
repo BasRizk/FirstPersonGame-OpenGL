@@ -31,7 +31,7 @@ public:
 		enemySpeed = 0.05;
 		spawnRadius = 10;
 	}
-
+	/*
 	void Update() override
 	{
 		if (timer < 0)
@@ -56,4 +56,5 @@ public:
 			RestartGame();
 		}
 	}
+	*/
 };

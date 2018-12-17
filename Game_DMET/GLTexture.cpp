@@ -102,10 +102,10 @@ void GLTexture::LoadBMP(char *name)
 	// If the texture file was not found, return from the function
 	if (!TextureImage[0]) {
 		return;
-		printf("Texture image was not found.");
+		//printf("Texture image was not found.");
 	}
 	else {
-		printf("Texture image was found");
+		//printf("Texture image was found");
 	}
 
 	// Just in case we want to use the width and height later
