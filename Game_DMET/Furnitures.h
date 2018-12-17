@@ -35,6 +35,7 @@ public:
 
 		glPopMatrix();
 	}
+
 };
 
 class WoodChair : public GameObject {
@@ -46,7 +47,7 @@ public:
 
 	WoodChair()
 	{
-		transform.position = Vector3f(0, -0.5, 0);
+		transform.position = Vector3f(0, 0.5, -0.5);
 	}
 
 	void Start() override
@@ -98,6 +99,10 @@ public:
 		chairBackStick[3].transform.position = Vector3f(-width, height_offset + height + 0.01, 0);
 		addChild(&chairBackStick[3], true);
 	}
+
+	void Update() override{
+		CalculateCollider();
+	}
 };
 
 class WoodTable : public GameObject {
@@ -108,7 +113,7 @@ public:
 
 	WoodTable()
 	{
-		transform.position = Vector3f(1, -0.5, 0);
+		transform.position = Vector3f(1, 0.5, -0.5);
 	}
 
 	void Start() override
@@ -139,5 +144,40 @@ public:
 		tableLeg[3] = WoodPrism(thickness, height, thickness);
 		tableLeg[3].transform.position = Vector3f(width, 0, -width);
 		addChild(&tableLeg[3], true);
+	}
+
+	void Update() override {
+		CalculateCollider();
+	}
+};
+
+
+class House : public GameObject {
+public:
+	Model_3DS model3ds;
+	WoodTable table;
+	WoodChair chair;
+
+	House() {
+		char buffer[80];
+		strcpy(buffer, "Models/house/house.3ds");
+		model3ds.Load(buffer);
+		transform.position = Vector3f(2, -1, 0);
+	}
+
+	void Start() override {
+		table = WoodTable();
+		addChild(&table, true);
+		chair = WoodChair();
+		addChild(&chair, true);
+	}
+
+	void Display() override
+	{
+		glPushMatrix();
+		glRotatef(90.f, 1, 0, 0);
+		glRotated(180.f, 0, 0, 1);
+		model3ds.Draw();
+		glPopMatrix();
 	}
 };

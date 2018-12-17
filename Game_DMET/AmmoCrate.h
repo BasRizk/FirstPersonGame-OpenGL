@@ -17,7 +17,9 @@ public:
 
 	void Start() override
 	{
-		transform.localScale = Vector3f(3, 1, 1);
+		transform.position = Vector3f(0, 0, 0);
+		transform.localScale = Vector3f(1, 1, 1);
+		transform.rotation = Vector3f(0, 90, 0);
 	}
 
 	void Update() override
