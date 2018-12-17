@@ -193,7 +193,7 @@ public:
 		freeChildrenPointer = &freeChildren;
 		transform.parent = &Transform::defaultParentTranform;
 
-		printf("%s\n", "CONS");
+		//printf("%s\n", "CONS");
 		start = clock();
 		Start();
 	}
