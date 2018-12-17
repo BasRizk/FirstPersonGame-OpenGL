@@ -26,7 +26,6 @@ class Bullet : public GameObject {
 	Vector3f position;
 	GameObject * spawner;
 
-
 public:
 	Bullet()
 	{
@@ -50,16 +49,16 @@ public:
 		transform.Translate(direction.unit() * speed);
 		//printf("speed : %f , Direction: %f , %f , %f  \n", speed, transform.position.x , transform.position.y , transform.position.z);
 		CalculateCollider();
-		spawner->getChild(0, false);
-		//for (GameObject * enemy : spawner->freeChildren)
-		//{
-		//	//if (DetectCollision(enemy->boundryPoints))
-		//	//{
-		//	//	printf("HIT");
-		//	//	enemy->SetActive(false);
-		//	//	SetActive(false);
-		//	//}
-		//}
+	
+		for (GameObject * enemy : spawner->freeChildren)
+		{
+			if (DetectCollision(enemy->boundryPoints))
+			{
+				printf("HIT");
+				enemy->SetActive(false);
+				SetActive(false);
+			}
+		}
 		
 	}
 
@@ -112,9 +111,9 @@ public:
 	{
 
 	}
-	Player(GameObject * spawner)
+	Player(GameObject * _spawner)
 	{
-
+		spawner = _spawner;
 	}
 
 	void Start() override
