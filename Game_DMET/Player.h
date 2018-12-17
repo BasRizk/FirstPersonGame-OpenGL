@@ -24,17 +24,20 @@ class Bullet : public GameObject {
 	float speed;
 	Vector3f direction;
 	Vector3f position;
+	GameObject * spawner;
+
 
 public:
 	Bullet()
 	{
 
 	}
-	Bullet(Vector3f _direction, float _speed, Vector3f _position)
+	Bullet(Vector3f _direction, float _speed, Vector3f _position , GameObject * _spawner)
 	{
 		speed = _speed;
 		direction = _direction;
 		position = _position;
+		spawner = _spawner;
 	}
 
 	void Start() override
@@ -44,8 +47,20 @@ public:
 
 	void Update() override
 	{
-		transform.Translate(direction * speed);
-		printf("speed : %f , Direction: %f , %f , %f  \n", speed, direction.x , direction.y , direction.z);
+		transform.Translate(direction.unit() * speed);
+		//printf("speed : %f , Direction: %f , %f , %f  \n", speed, transform.position.x , transform.position.y , transform.position.z);
+		CalculateCollider();
+		spawner->getChild(0, false);
+		//for (GameObject * enemy : spawner->freeChildren)
+		//{
+		//	//if (DetectCollision(enemy->boundryPoints))
+		//	//{
+		//	//	printf("HIT");
+		//	//	enemy->SetActive(false);
+		//	//	SetActive(false);
+		//	//}
+		//}
+		
 	}
 
 	void Display() override
@@ -91,11 +106,21 @@ class Player : public GameObject {
 public:
 	DIRECTION movementDirection;
 	CameraHolder cameraHolder;
-	Bullet bullet;
+	GameObject * spawner;
+
+	Player()
+	{
+
+	}
+	Player(GameObject * spawner)
+	{
+
+	}
+
 	void Start() override
 	{
 		cameraHolder = CameraHolder();
-		addChild(&cameraHolder , true);
+		addChild(&cameraHolder, true);
 		transform.position = Vector3f(0, 0, 0);
 		speed = 0.1;
 		movementDirection = STOP;
@@ -113,15 +138,43 @@ public:
 
 	void Shoot()
 	{
-		bullet = Bullet((transform.Forward() - transform.position).unit(), 0.1f , cameraHolder.transform.position + transform.position);
-		addChild(&bullet, false);
+		Bullet * bullet = new Bullet((transform.Forward() - transform.position).unit(), 1 , cameraHolder.transform.position + transform.position , spawner);
+		addChild(bullet, false);
+		
 	}
 
 	void move()
 	{
-		Vector3f tmp = transform.Forward() - transform.position;
-		tmp.y = 0;
-		tmp = tmp.unit();
+		Vector3f fwd = transform.Forward() - transform.position;
+		fwd.y = 0;
+		fwd = fwd.unit();
+		//Vector3f right = fwd.cross(Vector3f(0, 1, 0));
+		//Vector3f direction = Vector3f(0, 0, 0);
+		//Vector3f tmp;
+		//if ((movementDirection)  & FORWARD)
+		//{
+		//	tmp = direction + fwd;
+		//	direction = tmp;
+		//	printf("fwd");
+		//}
+		//if ((movementDirection)  & BACKWARD)
+		//{
+		//	tmp = direction - fwd;
+		//	direction = tmp;
+		//}
+		//if ((movementDirection)  & LEFT)
+		//{
+		//	tmp = direction + right;
+		//	direction = tmp;
+		//}
+		//if ((movementDirection)  & RIGHT)
+		//{
+		//	tmp = direction - right;
+		//	direction = tmp;
+		//}
+		//printf("direction : %f , %f , %f \n", direction.x, direction.y, direction.z);
+		//transform.Translate(direction.unit() * speed);
+
 		switch (movementDirection)
 		{
 
@@ -131,21 +184,21 @@ public:
 			break;
 		case FORWARD:
 		case FORWARD_LEFT_RIGHT:
-			transform.Translate(tmp * speed);
+			transform.Translate(fwd * speed);
 			break;
 		case BACKWARD:
 		case BACKWARD_LEFT_RIGHT:
-			transform.Translate(tmp * -speed);
+			transform.Translate(fwd * -speed);
 			break;
 		case RIGHT:
 		case FORWARD_BACKWARD_RIGHT:
-			tmp = tmp.cross(Vector3f(0,1,0));
-			transform.Translate(tmp.unit() * speed);
+			fwd = fwd.cross(Vector3f(0,1,0));
+			transform.Translate(fwd.unit() * speed);
 			break;
 		case LEFT:
 		case FORWARD_BACKWARD_LEFT:
-			tmp = tmp.cross(Vector3f(0,1,0));
-			transform.Translate(tmp.unit() * -speed);
+			fwd = fwd.cross(Vector3f(0,1,0));
+			transform.Translate(fwd.unit() * -speed);
 			break;
 		default:
 			break;
