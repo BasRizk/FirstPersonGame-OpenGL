@@ -42,7 +42,6 @@ public:
 	void Start() override
 	{
 		transform.position = position;
-		transform.ScaleAdd(Vector3f(1, 1, 1));
 		maxDistance = 50;
 		speed = 2;
 	}
@@ -118,6 +117,7 @@ public:
 	DIRECTION movementDirection;
 	CameraHolder cameraHolder;
 	GameObject * spawner;
+	float HP;
 
 	Player()
 	{
@@ -126,6 +126,12 @@ public:
 	Player(GameObject * _spawner)
 	{
 		spawner = _spawner;
+		
+	}
+
+	void TakeDamage(float value)
+	{
+		HP -= value;
 	}
 
 	void Start() override
@@ -137,12 +143,16 @@ public:
 		walkHopDirection = 0.5f;
 		movementTimer = 150;
 		timer = movementTimer;
+		colliderRadius = 4;
+		HP = 100;
 		movementDirection = STOP;
 	}
 
 	void Update() override
 	{
 		move();
+		printf("%f \n", HP);
+		CalculateCollider();
 	}
 
 	void mainFunc()

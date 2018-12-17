@@ -9,29 +9,13 @@
 
 using namespace std;
 
-class Color
-{
-public:
-	float r;
-
-	float g;
-
-	float b;
-
-	float a;
-
-	Color() {}
-	Color(float red, float green, float blue) : r(red / 100.0f), g(green / 100.0f), b(blue / 100.0f), a(1) {}
-	Color(float red, float green, float blue, float alpha) : r(red), g(green), b(blue), a(alpha) {}
-};
-
 enum Space
 {
 	self,
 	world
 };
 
-void DrawCircle(float x, float y, float radius, bool midPoint, Color color, float minAngle, float maxAngle)
+static void DrawCircle(float x, float y, float radius, bool midPoint, Color color, float minAngle, float maxAngle)
 {
 	float angle = 0;
 	float x_value;
@@ -84,6 +68,15 @@ public:
 		Translate(direction.x, direction.y, direction.z);
 	}
 
+	float distanceSqured(Vector3f point)
+	{
+		float deltaX = point.x - position.x;
+		float deltaY = point.y - position.y;
+		float deltaZ = point.z - position.z;
+
+		return (deltaX * deltaX) + (deltaY * deltaY) + (deltaZ * deltaZ);
+	}
+
 	void Rotate(float x, float y, float z, Space space)
 	{
 		switch (space)
@@ -110,7 +103,7 @@ public:
 
 	void Rotate(Vector3f angle)
 	{
-		Rotate(angle.x, angle.y, angle.z, self);
+		Rotate(angle.x, angle.y, angle.z, world);
 	}
 
 	void Rotate(float x, float y, float z)
@@ -147,6 +140,17 @@ public:
 	}
 
 };
+enum ColliderType {
+	BOX , SPHERE
+};
+
+class Collider {
+public:
+	ColliderType type;
+	float boundryPoints[6];
+	bool ColliderEnabled;
+
+};
 class GameObject
 {
 public:
@@ -159,6 +163,7 @@ public:
 	vector<GameObject *> * freeChildrenPointer;
 	bool isGameOn;
 	bool enabled = true;
+	float colliderRadius;
 	// Vector3 boundryPointsDistanceFromPivot[4];
 	// bool defaultCollider = true;
 
@@ -216,12 +221,51 @@ public:
 		// 		boundryPoints[i].Add(position);
 		// 	}
 		// }
-		boundryPoints[0] = transform.position.x - transform.localScale.x * 0.5f;
-		boundryPoints[1] = transform.position.x + transform.localScale.x * 0.5f;
-		boundryPoints[2] = transform.position.y - transform.localScale.y * 0.5f;
-		boundryPoints[3] = transform.position.y + transform.localScale.y * 0.5f;
-		boundryPoints[4] = transform.position.z - transform.localScale.z * 0.5f;
-		boundryPoints[5] = transform.position.z + transform.localScale.z * 0.5f;
+
+
+		boundryPoints[0] = transform.position.x - transform.localScale.x * 0.5f + 100;
+		boundryPoints[1] = transform.position.x + transform.localScale.x * 0.5f + 100;
+		boundryPoints[2] = transform.position.y - transform.localScale.y * 0.5f + 100;
+		boundryPoints[3] = transform.position.y + transform.localScale.y * 0.5f + 100;
+		boundryPoints[4] = transform.position.z - transform.localScale.z * 0.5f + 100;
+		boundryPoints[5] = transform.position.z + transform.localScale.z * 0.5f + 100;
+
+
+
+		//if (transform.position.x > 0)
+		//{
+		//	boundryPoints[0] = transform.position.x - transform.localScale.x * 0.5f;
+		//	boundryPoints[1] = transform.position.x + transform.localScale.x * 0.5f;
+		//}
+		//else
+		//{
+		//	boundryPoints[1] = transform.position.x - transform.localScale.x * 0.5f;
+		//	boundryPoints[0] = transform.position.x + transform.localScale.x * 0.5f;
+		//}
+
+		//if (transform.position.y > 0)
+		//{
+		//	boundryPoints[2] = transform.position.y - transform.localScale.y * 0.5f;
+		//	boundryPoints[3] = transform.position.y + transform.localScale.y * 0.5f;
+		//}
+		//else
+		//{
+		//	boundryPoints[3] = transform.position.y - transform.localScale.y * 0.5f;
+		//	boundryPoints[2] = transform.position.y + transform.localScale.y * 0.5f;
+		//}
+
+		//if (transform.position.z > 0)
+		//{
+		//	boundryPoints[4] = transform.position.z - transform.localScale.z * 0.5f;
+		//	boundryPoints[5] = transform.position.z + transform.localScale.z * 0.5f;
+		//}
+		//else
+		//{
+		//	boundryPoints[5] = transform.position.z - transform.localScale.z * 0.5f;
+		//	boundryPoints[4] = transform.position.z + transform.localScale.z * 0.5f;
+		//}
+		//
+		
 	}
 
 	bool DetectCollision(float points[])

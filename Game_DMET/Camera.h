@@ -1,11 +1,13 @@
 #pragma once
 #include "pch.h"
+
 class Camera : public GameObject
 {
 public:
 	Vector3f eye, center, upward;
 	Vector3f rotation;
 	Transform * player;
+	UI ui;
 	bool firstPerson = false;
 	Camera()
 	{
@@ -31,6 +33,7 @@ public:
 	void Start() override
 	{
 		defaultPos();
+		//addChild(&ui, true);
 	}
 
 	void toggleViewMode()
@@ -60,6 +63,7 @@ public:
 			transform.position = player->position - ((player->Forward() - player->position).unit() * 2 + Vector3f(0, -0.4, 0));
 		}
 		setupCamera();
+
 	}
 	void mainFunc()
 	{
@@ -68,7 +72,7 @@ public:
 
 	void Display() override
 	{
-
+	
 	}
 
 
@@ -94,66 +98,6 @@ public:
 		transform.position = Vector3f(0,0,-10);
 		transform.rotation = Vector3f(0, 0, 0);
 	}
-
-	void moveX(float d)
-	{
-		Vector3f right = upward.cross(center - eye).unit();
-		eye = eye + right * d;
-		center = center + right * d;
-	}
-
-	void moveY(float d)
-	{
-		eye = eye + upward.unit() * d;
-		center = center + upward.unit() * d;
-	}
-
-	void moveZ(float d)
-	{
-		Vector3f view = (center - eye).unit();
-		eye = eye + view * d;
-		center = center + view * d;
-	}
-
-	void moveForwardBackward(float d)
-	{
-
-		Vector3f tmp = center - eye;
-		tmp.y = 0;
-		tmp = tmp.unit();
-		eye = eye + tmp * d;
-	}
-	void rotateX(float a)
-	{
-		/*Vector3f view = (center - eye).unit();
-		Vector3f right = up.cross(view).unit();
-		view = view * cos(DEG2RAD(a)) + up * sin(DEG2RAD(a));
-		up = view.cross(right);
-		center = eye + view;*/
-		//Vector3f tmp = Vector3f(center.x, center.y, center.z);
-		//center.y = tmp.y * cos(DEG2RAD(a)) - tmp.z * sin(DEG2RAD(a));
-		//center.z = tmp.y * sin(DEG2RAD(a)) + tmp.z * cos(DEG2RAD(a));
-
-		transform.rotation.x -= a * 0.1f;
-		//rotation.x -= a * 0.1f;
-	}
-
-	void rotateY(float a)
-	{
-		/*Vector3f view = (center - eye).unit();
-		Vector3f right = up.cross(view).unit();
-		view = view * cos(DEG2RAD(a)) + right * sin(DEG2RAD(a));
-		right = view.cross(up);
-		center = eye + view;*/
-		//Vector3f tmp = Vector3f(center.x, center.y, center.z);
-		//center.x = tmp.x * cos(DEG2RAD(a)) + tmp.z * sin(DEG2RAD(a));
-		//center.z = -tmp.z * sin(DEG2RAD(a)) + tmp.z * cos(DEG2RAD(a));
-
-		transform.rotation.y += a * 0.1f;
-		//rotation.y += a * 0.1f;
-	}
-
-	
 
 	void look()
 	{
