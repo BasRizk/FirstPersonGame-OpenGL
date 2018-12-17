@@ -99,7 +99,7 @@
       <GenerateDebugInformation>true</GenerateDebugInformation>
       <AdditionalLibraryDirectories>
       </AdditionalLibraryDirectories>
-      <AdditionalDependencies>kernel32.lib;user32.lib;gdi32.lib;winspool.lib;comdlg32.lib;advapi32.lib;shell32.lib;ole32.lib;oleaut32.lib;uuid.lib;odbc32.lib;odbccp32.lib;glut32.lib;%(AdditionalDependencies)</AdditionalDependencies>
+      <AdditionalDependencies>kernel32.lib;user32.lib;gdi32.lib;winspool.lib;comdlg32.lib;advapi32.lib;shell32.lib;ole32.lib;oleaut32.lib;uuid.lib;odbc32.lib;odbccp32.lib;glut32.lib;legacy_stdio_definitions.lib;%(AdditionalDependencies)</AdditionalDependencies>
     </Link>
   </ItemDefinitionGroup>
   <ItemDefinitionGroup Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">
@@ -156,17 +156,28 @@
     </Link>
   </ItemDefinitionGroup>
   <ItemGroup>
+    <ClInclude Include="BlenderModel.h" />
     <ClInclude Include="Camera.h" />
     <ClInclude Include="Enemy.h" />
     <ClInclude Include="EnemySpawner.h" />
+    <ClInclude Include="glaux.h" />
+    <ClInclude Include="glew.h" />
+    <ClInclude Include="GLTexture.h" />
+    <ClInclude Include="GroundGrass.h" />
+    <ClInclude Include="House.h" />
+    <ClInclude Include="Model_3DS.h" />
     <ClInclude Include="Player.h" />
     <ClInclude Include="Objects.h" />
     <ClInclude Include="pch.h" />
     <ClInclude Include="Tools.h" />
+    <ClInclude Include="Tree.h" />
     <ClInclude Include="UICanvas.h" />
+    <ClInclude Include="WoodChair.h" />
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="Game_DMET.cpp" />
+    <ClCompile Include="GLTexture.cpp" />
+    <ClCompile Include="Model_3DS.cpp" />
     <ClCompile Include="pch.cpp">
       <PrecompiledHeader Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">Create</PrecompiledHeader>
       <PrecompiledHeader Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">Create</PrecompiledHeader>

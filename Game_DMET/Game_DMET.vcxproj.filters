@@ -39,12 +39,45 @@
     <ClInclude Include="UICanvas.h">
       <Filter>Header Files</Filter>
     </ClInclude>
+    <ClInclude Include="BlenderModel.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="GLTexture.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="Model_3DS.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="WoodChair.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="glaux.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="glew.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="House.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="Tree.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="GroundGrass.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="pch.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
     <ClCompile Include="Game_DMET.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="GLTexture.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="Model_3DS.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
   </ItemGroup>

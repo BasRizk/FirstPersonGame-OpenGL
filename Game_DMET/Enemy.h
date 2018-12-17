@@ -96,7 +96,10 @@ public:
 
 	void Display() override
 	{
-		glColor3d(1, 0, 0);
+		glPushMatrix();
+		//glColor3d(1, 0, 0);
 		glutSolidCube(1);
+		
+		glPopMatrix();
 	}
 };
