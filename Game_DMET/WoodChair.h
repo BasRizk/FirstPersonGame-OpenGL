@@ -13,7 +13,7 @@ public:
 		transform.localScale = Vector3f(_width, _height, _thickness);
 
 		char buffer[80];						
-		strcpy(buffer, "Textures/blu-sky-3.bmp");
+		strcpy(buffer, "Textures/wood.bmp");
 		tex.Load(buffer);				// Loads a bitmap
 		//loadBMP(&tex, buffer , true);
 
@@ -28,7 +28,7 @@ public:
 		qobj = gluNewQuadric();
 		tex.Use();
 		gluQuadricTexture(qobj, true);
-		//gluQuadricNormals(qobj, GL_SMOOTH);
+		gluQuadricNormals(qobj, GL_SMOOTH);
 		gluSphere(qobj, 1, 5, 5);
 		gluDeleteQuadric(qobj);
 
