@@ -163,11 +163,14 @@
     <ClInclude Include="glaux.h" />
     <ClInclude Include="glew.h" />
     <ClInclude Include="GLTexture.h" />
+    <ClInclude Include="GroundGrass.h" />
+    <ClInclude Include="House.h" />
     <ClInclude Include="Model_3DS.h" />
     <ClInclude Include="Player.h" />
     <ClInclude Include="Objects.h" />
     <ClInclude Include="pch.h" />
     <ClInclude Include="Tools.h" />
+    <ClInclude Include="Tree.h" />
     <ClInclude Include="UICanvas.h" />
     <ClInclude Include="WoodChair.h" />
   </ItemGroup>

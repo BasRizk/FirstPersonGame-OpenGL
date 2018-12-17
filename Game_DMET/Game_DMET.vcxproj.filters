@@ -57,6 +57,15 @@
     <ClInclude Include="glew.h">
       <Filter>Header Files</Filter>
     </ClInclude>
+    <ClInclude Include="House.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="Tree.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="GroundGrass.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="pch.cpp">
