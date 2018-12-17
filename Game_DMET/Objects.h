@@ -6,7 +6,6 @@
 #define PlanetRadiusFactor 1.0f / 1185.0f
 #define OrbetRadiusFactor 1.0f / 5.7f
 
-
 using namespace std;
 
 enum Space
@@ -169,6 +168,10 @@ public:
 
 	void SetActive(bool active)
 	{
+		if (active == false)
+		{
+			OnDisabled();
+		}
 		enabled = active;
 	}
 
@@ -200,9 +203,16 @@ public:
 		// printf("%s\n", "wrong");
 	}
 
+	virtual void RestartGame()
+	{
+
+	}
 	virtual void Display()
 	{
 	}
+
+	virtual void OnDisabled()
+	{ }
 
 	void CalculateCollider()
 	{

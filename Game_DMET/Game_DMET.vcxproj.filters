@@ -60,6 +60,9 @@
     <ClInclude Include="GroundGrass.h">
       <Filter>Header Files</Filter>
     </ClInclude>
+    <ClInclude Include="AmmoCrate.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
     <ClInclude Include="Furnitures.h">
       <Filter>Header Files</Filter>
     </ClInclude>

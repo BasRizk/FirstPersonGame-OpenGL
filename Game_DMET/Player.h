@@ -27,6 +27,7 @@ class Bullet : public GameObject {
 	Vector3f position;
 	GameObject * spawner;
 
+
 public:
 	Bullet()
 	{
@@ -117,16 +118,18 @@ public:
 	DIRECTION movementDirection;
 	CameraHolder cameraHolder;
 	GameObject * spawner;
-	float HP;
+	int HP;
+	int ammo;
+	int score;
 
 	Player()
 	{
-
+		
 	}
 	Player(GameObject * _spawner)
 	{
 		spawner = _spawner;
-		
+	
 	}
 
 	void TakeDamage(float value)
@@ -138,6 +141,11 @@ public:
 	{
 		cameraHolder = CameraHolder();
 		addChild(&cameraHolder, true);
+		RestartGame();
+	}
+
+	void RestartGame()
+	{
 		transform.position = Vector3f(0, 0, 0);
 		speed = 0.1;
 		walkHopDirection = 0.5f;
@@ -145,13 +153,14 @@ public:
 		timer = movementTimer;
 		colliderRadius = 4;
 		HP = 100;
+		ammo = 30;
+		score = 0;
 		movementDirection = STOP;
 	}
 
 	void Update() override
 	{
 		move();
-		//printf("%f \n", HP);
 		CalculateCollider();
 	}
 
@@ -162,9 +171,12 @@ public:
 
 	void Shoot()
 	{
-		Bullet * bullet = new Bullet((transform.Forward() - transform.position).unit(), cameraHolder.transform.position + transform.position , spawner);
-		addChild(bullet, false);
-		
+		if (ammo > 0)
+		{
+			Bullet * bullet = new Bullet((transform.Forward() - transform.position).unit(), cameraHolder.transform.position + transform.position , spawner);
+			addChild(bullet, false);
+			ammo--;
+		}		
 	}
 
 	void move()

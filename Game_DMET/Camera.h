@@ -7,7 +7,6 @@ public:
 	Vector3f eye, center, upward;
 	Vector3f rotation;
 	Transform * player;
-	UI ui;
 	bool firstPerson = false;
 	Camera()
 	{
