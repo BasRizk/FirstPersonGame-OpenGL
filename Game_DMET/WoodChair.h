@@ -23,48 +23,17 @@ public:
 	{
 		
 		glPushMatrix();
-		//tex.Use();
-		//glutSolidCube(1);
-		glPopMatrix();
-		
-		glPushMatrix();
 
 		GLUquadricObj * qobj;
 		qobj = gluNewQuadric();
 		tex.Use();
 		gluQuadricTexture(qobj, true);
-		gluQuadricNormals(qobj, GL_SMOOTH);
-		gluSphere(qobj, 1, 20, 20);
+		//gluQuadricNormals(qobj, GL_SMOOTH);
+		gluSphere(qobj, 1, 5, 5);
 		gluDeleteQuadric(qobj);
 
 
 		glPopMatrix();
-
-		/*
-		glPushMatrix();
-		glDisable(GL_LIGHTING);	// Disable lighting 
-
-		glColor3f(0.6, 0.6, 0.6);	// Dim the ground texture a bit
-		glPushMatrix();
-		//tex.Use();
-		glBegin(GL_QUADS);
-		glNormal3f(0, 1, 0);	// Set quad normal direction.
-		glTexCoord2f(0, 0);		// Set tex coordinates ( Using (0,0) -> (5,5) with texture wrapping set to GL_REPEAT to simulate the ground repeated grass texture).
-		glVertex3f(-20, 0, -20);
-		glTexCoord2f(5, 0);
-		glVertex3f(20, 0, -20);
-		glTexCoord2f(5, 5);
-		glVertex3f(20, 0, 20);
-		glTexCoord2f(0, 5);
-		glVertex3f(-20, 0, 20);
-		glEnd();
-		glPopMatrix();
-		
-		glEnable(GL_LIGHTING);	// Enable lighting again for other entites coming throung the pipeline.
-
-		glColor3f(1, 1, 1);	// Set material back to white instead of grey used for the ground texture.
-		glPopMatrix();
-		*/
 	}
 };
 
@@ -77,7 +46,7 @@ public:
 
 	WoodChair()
 	{
-		transform.position = Vector3f(0, 0, 0);
+		transform.position = Vector3f(0, -0.5, 0);
 	}
 
 	void Start() override
