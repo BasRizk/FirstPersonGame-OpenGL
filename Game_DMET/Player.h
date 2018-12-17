@@ -22,6 +22,7 @@ inline DIRECTION operator&(DIRECTION a, DIRECTION b)
 class Bullet : public GameObject {
 
 	float speed;
+	float maxDistance;
 	Vector3f direction;
 	Vector3f position;
 	GameObject * spawner;
@@ -31,9 +32,8 @@ public:
 	{
 
 	}
-	Bullet(Vector3f _direction, float _speed, Vector3f _position , GameObject * _spawner)
+	Bullet(Vector3f _direction, Vector3f _position , GameObject * _spawner)
 	{
-		speed = _speed;
 		direction = _direction;
 		position = _position;
 		spawner = _spawner;
@@ -42,17 +42,26 @@ public:
 	void Start() override
 	{
 		transform.position = position;
+		transform.ScaleAdd(Vector3f(1, 1, 1));
+		maxDistance = 50;
+		speed = 2;
 	}
 
 	void Update() override
 	{
-		transform.Translate(direction.unit() * speed);
+		Vector3f distance = direction.unit() * speed;
+		if (maxDistance - speed < 0)
+			SetActive(false);
+		else
+			maxDistance -= speed;
+
+		transform.Translate(distance);
 		//printf("speed : %f , Direction: %f , %f , %f  \n", speed, transform.position.x , transform.position.y , transform.position.z);
 		CalculateCollider();
 	
 		for (GameObject * enemy : spawner->freeChildren)
 		{
-			if (DetectCollision(enemy->boundryPoints))
+			if (enemy->enabled && DetectCollision(enemy->boundryPoints))
 			{
 				printf("HIT");
 				enemy->SetActive(false);
@@ -102,6 +111,9 @@ public:
 class Player : public GameObject {
 
 	float speed;
+	float movementTimer;
+	float timer;
+	float walkHopDirection;
 public:
 	DIRECTION movementDirection;
 	CameraHolder cameraHolder;
@@ -122,6 +134,9 @@ public:
 		addChild(&cameraHolder, true);
 		transform.position = Vector3f(0, 0, 0);
 		speed = 0.1;
+		walkHopDirection = 0.5f;
+		movementTimer = 150;
+		timer = movementTimer;
 		movementDirection = STOP;
 	}
 
@@ -137,13 +152,14 @@ public:
 
 	void Shoot()
 	{
-		Bullet * bullet = new Bullet((transform.Forward() - transform.position).unit(), 1 , cameraHolder.transform.position + transform.position , spawner);
+		Bullet * bullet = new Bullet((transform.Forward() - transform.position).unit(), cameraHolder.transform.position + transform.position , spawner);
 		addChild(bullet, false);
 		
 	}
 
 	void move()
 	{
+		
 		Vector3f fwd = transform.Forward() - transform.position;
 		fwd.y = 0;
 		fwd = fwd.unit();
@@ -183,21 +199,53 @@ public:
 			break;
 		case FORWARD:
 		case FORWARD_LEFT_RIGHT:
+			if (timer < 0)
+			{
+				walkHopDirection = -walkHopDirection;
+				timer = movementTimer;
+			}
+			else
+				timer -= deltaTime;
 			transform.Translate(fwd * speed);
+			transform.Translate(Vector3f(0,1,0) * speed * walkHopDirection);
 			break;
 		case BACKWARD:
 		case BACKWARD_LEFT_RIGHT:
+			if (timer < 0)
+			{
+				walkHopDirection = -walkHopDirection;
+				timer = movementTimer;
+			}
+			else
+				timer -= deltaTime;
 			transform.Translate(fwd * -speed);
+			transform.Translate(Vector3f(0, 1, 0) * speed * walkHopDirection);
 			break;
 		case RIGHT:
 		case FORWARD_BACKWARD_RIGHT:
+			if (timer < 0)
+			{
+				walkHopDirection = -walkHopDirection;
+				timer = movementTimer;
+			}
+			else
+				timer -= deltaTime;
 			fwd = fwd.cross(Vector3f(0,1,0));
 			transform.Translate(fwd.unit() * speed);
+			transform.Translate(Vector3f(0, 1, 0) * speed * walkHopDirection);
 			break;
 		case LEFT:
 		case FORWARD_BACKWARD_LEFT:
+			if (timer < 0)
+			{
+				walkHopDirection = -walkHopDirection;
+				timer = movementTimer;
+			}
+			else
+				timer -= deltaTime;
 			fwd = fwd.cross(Vector3f(0,1,0));
 			transform.Translate(fwd.unit() * -speed);
+			transform.Translate(Vector3f(0, 1, 0) * speed * walkHopDirection);
 			break;
 		default:
 			break;
@@ -232,8 +280,8 @@ public:
 	void Display() override
 	{
 		glPushMatrix();
-		glTranslated(-1, -1, -1);
-		glutWireCube(2);
+		glTranslated(0, 0, -0.5);
+		glutSolidCube(0.5);
 		glPopMatrix();
 	}
 

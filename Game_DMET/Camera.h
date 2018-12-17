@@ -6,7 +6,7 @@ public:
 	Vector3f eye, center, upward;
 	Vector3f rotation;
 	Transform * player;
-
+	bool firstPerson = false;
 	Camera()
 	{
 
@@ -17,6 +17,8 @@ public:
 	}
 	void setupCamera()
 	{
+		
+
 		glMatrixMode(GL_PROJECTION);
 		glLoadIdentity();
 		gluPerspective(60, 640 / 480, 0.0001, 5000);
@@ -31,6 +33,11 @@ public:
 		defaultPos();
 	}
 
+	void toggleViewMode()
+	{
+		firstPerson = !firstPerson;
+	}
+
 	void Update() override
 	{
 
@@ -41,9 +48,17 @@ public:
 		eye = playerPos;
 		
 		center = playerForward;	*/
-		transform.rotation = player->rotation;
-		transform.position = player->position;
 
+		if (firstPerson)
+		{
+			transform.rotation = player->rotation;
+			transform.position = player->position;
+		}
+		else
+		{
+			transform.rotation = player->rotation;
+			transform.position = player->position - ((player->Forward() - player->position).unit() * 2 + Vector3f(0, -0.4, 0));
+		}
 		setupCamera();
 	}
 	void mainFunc()
