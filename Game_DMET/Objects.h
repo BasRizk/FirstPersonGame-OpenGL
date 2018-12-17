@@ -150,19 +150,39 @@ public:
 class GameObject
 {
 public:
+	std::vector<GameObject *> connectedChildren;
+	std::vector<GameObject *> freeChildren;
 	Transform transform;
 	clock_t start;
 	clock_t deltaTime;
-	float boundryPoints[4];
-	vector<GameObject *> connectedChildren;
-	vector<GameObject *> freeChildren;
+	float boundryPoints[6];
+	vector<GameObject *> * freeChildrenPointer;
 	bool isGameOn;
+	bool enabled = true;
 	// Vector3 boundryPointsDistanceFromPivot[4];
 	// bool defaultCollider = true;
+
+	void SetActive(bool active)
+	{
+		enabled = active;
+	}
+
+	GameObject * getChild(int number, bool connected)
+	{
+		GameObject * tmp;
+		if (connected)
+			tmp = connectedChildren.at(number);
+		else
+			tmp = freeChildren.at(number);
+		return tmp;
+	}
 	
 	GameObject()
 	{
 		transform = Transform();
+		connectedChildren = vector<GameObject *>();
+		freeChildren = vector<GameObject *>();
+		freeChildrenPointer = &freeChildren;
 		transform.parent = &Transform::defaultParentTranform;
 
 		printf("%s\n", "CONS");
@@ -200,11 +220,13 @@ public:
 		boundryPoints[1] = transform.position.x + transform.localScale.x * 0.5f;
 		boundryPoints[2] = transform.position.y - transform.localScale.y * 0.5f;
 		boundryPoints[3] = transform.position.y + transform.localScale.y * 0.5f;
+		boundryPoints[4] = transform.position.z - transform.localScale.z * 0.5f;
+		boundryPoints[5] = transform.position.z + transform.localScale.z * 0.5f;
 	}
 
 	bool DetectCollision(float points[])
 	{
-		if (boundryPoints[0] > points[1] || boundryPoints[1] < points[0] || boundryPoints[3] < points[2] || boundryPoints[2] > points[3])
+		if (boundryPoints[0] > points[1] || boundryPoints[1] < points[0] || boundryPoints[3] < points[2] || boundryPoints[2] > points[3] || boundryPoints[4] > points[5] || boundryPoints[5] < points[5])
 			return false;
 		else
 			return true;
@@ -246,64 +268,67 @@ public:
 
 	void mainFunc()
 	{
-		// printf("%s\n","main");
-		deltaTime = clock() - start;
-		start = clock();
-		Update();
-		glPushMatrix();
-		// glTranslated(position.x + translateFactor.x, position.y + translateFactor.y, position.z + translateFactor.z);
-		// glRotated(rotation + rotateFactor, 0, 0, 1);
-		// glScaled(scale.x, scale.y, scale.z);
-
-		//glTranslated(transform.localPosition.x, transform.localPosition.y, transform.localPosition.z);
-
-		//glRotated(transform.localRotation.x, 1, 0, 0);
-		//glRotated(transform.localRotation.y, 0, 1, 0);
-		//glRotated(transform.localRotation.z, 0, 0, 1);
-
-
-		//if (transform.parent != NULL)
-		//{
-		//	
-
-
-
-		//glTranslated(transform.parent->position.x, transform.parent->position.y, transform.parent->position.z);
-
-		//glRotated(transform.parent->rotation.x, 1, 0, 0);
-		//glRotated(transform.parent->rotation.y, 0, 1, 0);
-		//glRotated(transform.parent->rotation.z, 0, 0, 1);
-
-		//glTranslated(transform.localPosition.x, transform.localPosition.y, transform.localPosition.z);
-
-		//glRotated(transform.localRotation.x, 1, 0, 0);
-		//glRotated(transform.localRotation.y, 0, 1, 0);
-		//glRotated(transform.localRotation.z, 0, 0, 1);
-
-		//glScaled(transform.parent->localScale.x, transform.parent->localScale.y, transform.parent->localScale.z);
-		////}
-		//glScaled(transform.localScale.x, transform.localScale.y, transform.localScale.z);
-
-		glTranslated(transform.position.x, transform.position.y, transform.position.z);
-
-		glRotated(transform.rotation.y, 0, 1, 0);
-		glRotated(transform.rotation.x, 1, 0, 0);
-		glRotated(transform.rotation.z, 0, 0, 1);
-		
-		glScaled(transform.localScale.x, transform.localScale.y, transform.localScale.z);
-
-		Display();
-
-		for (GameObject *obj1 : connectedChildren)
+		// printf("%s\n","main
+		if (enabled)
 		{
-			obj1->mainFunc();
-		}
+			deltaTime = clock() - start;
+			start = clock();
+			Update();
+			glPushMatrix();
+			// glTranslated(position.x + translateFactor.x, position.y + translateFactor.y, position.z + translateFactor.z);
+			// glRotated(rotation + rotateFactor, 0, 0, 1);
+			// glScaled(scale.x, scale.y, scale.z);
 
-		glPopMatrix();
+			//glTranslated(transform.localPosition.x, transform.localPosition.y, transform.localPosition.z);
 
-		for (GameObject *obj1 : freeChildren)
-		{
-			obj1->mainFunc();
+			//glRotated(transform.localRotation.x, 1, 0, 0);
+			//glRotated(transform.localRotation.y, 0, 1, 0);
+			//glRotated(transform.localRotation.z, 0, 0, 1);
+
+
+			//if (transform.parent != NULL)
+			//{
+			//	
+
+
+
+			//glTranslated(transform.parent->position.x, transform.parent->position.y, transform.parent->position.z);
+
+			//glRotated(transform.parent->rotation.x, 1, 0, 0);
+			//glRotated(transform.parent->rotation.y, 0, 1, 0);
+			//glRotated(transform.parent->rotation.z, 0, 0, 1);
+
+			//glTranslated(transform.localPosition.x, transform.localPosition.y, transform.localPosition.z);
+
+			//glRotated(transform.localRotation.x, 1, 0, 0);
+			//glRotated(transform.localRotation.y, 0, 1, 0);
+			//glRotated(transform.localRotation.z, 0, 0, 1);
+
+			//glScaled(transform.parent->localScale.x, transform.parent->localScale.y, transform.parent->localScale.z);
+			////}
+			//glScaled(transform.localScale.x, transform.localScale.y, transform.localScale.z);
+
+			glTranslated(transform.position.x, transform.position.y, transform.position.z);
+
+			glRotated(transform.rotation.y, 0, 1, 0);
+			glRotated(transform.rotation.x, 1, 0, 0);
+			glRotated(transform.rotation.z, 0, 0, 1);
+
+			glScaled(transform.localScale.x, transform.localScale.y, transform.localScale.z);
+
+			Display();
+
+			for (GameObject *obj1 : connectedChildren)
+			{
+				obj1->mainFunc();
+			}
+
+			glPopMatrix();
+
+			for (GameObject *obj1 : freeChildren)
+			{
+				obj1->mainFunc();
+			}
 		}
 	}
 };
