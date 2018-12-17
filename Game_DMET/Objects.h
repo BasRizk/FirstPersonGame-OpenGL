@@ -6,7 +6,6 @@
 #define PlanetRadiusFactor 1.0f / 1185.0f
 #define OrbetRadiusFactor 1.0f / 5.7f
 
-
 using namespace std;
 
 enum Space
