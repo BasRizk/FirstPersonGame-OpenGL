@@ -6,18 +6,24 @@ class EnemySpawner : public GameObject {
 	float spawnTime;
 	float enemySpeed;
 	float timer;
+
 public:
-	
+	Transform * player;
 	EnemySpawner()
 	{
 
+	}
+	EnemySpawner(Transform * _player)
+	{
+		player = _player;
 	}
 	void Start() override
 	{
 		transform.position = Vector3f(0,0,0);
 		spawnTime = 3000;
-		enemySpeed = 0.1;
-		spawnRadius = 8;
+		timer = spawnTime;
+		enemySpeed = 0.05;
+		spawnRadius = 10;
 	}
 
 	void Update() override
@@ -27,7 +33,7 @@ public:
 			float angle = rand() % 360;
 			Vector3f position = Vector3f(spawnRadius * cos(DEG2RAD(angle)), 0, spawnRadius * sin(DEG2RAD(angle)));
 			
-			Enemy * enemy = new Enemy(enemySpeed, position);
+			Enemy * enemy = new Enemy(enemySpeed, position, player);
 
 			addChild(enemy, false);
 
