@@ -159,6 +159,7 @@
     </Link>
   </ItemDefinitionGroup>
   <ItemGroup>
+    <ClInclude Include="AmmoCrate.h" />
     <ClInclude Include="BlenderModel.h" />
     <ClInclude Include="Camera.h" />
     <ClInclude Include="Enemy.h" />

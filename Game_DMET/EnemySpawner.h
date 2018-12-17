@@ -19,7 +19,13 @@ public:
 	}
 	void Start() override
 	{
-		transform.position = Vector3f(0,0,0);
+		RestartGame();
+	}
+
+	void RestartGame() override
+	{
+		freeChildren.clear();
+		transform.position = Vector3f(0, 0, 0);
 		spawnTime = 3000;
 		timer = 2000;
 		enemySpeed = 0.05;
@@ -42,6 +48,12 @@ public:
 		else
 		{
 			timer -= deltaTime;
+		}
+
+		if (((Player *)player)->HP < 0)
+		{
+			player->RestartGame();
+			RestartGame();
 		}
 	}
 };

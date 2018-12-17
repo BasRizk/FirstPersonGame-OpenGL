@@ -102,4 +102,10 @@ public:
 		
 		glPopMatrix();
 	}
+
+	void OnDisabled() override
+	{
+		printf("SCORE");
+		((Player*)player)->score += 5;
+	}
 };
