@@ -151,7 +151,7 @@ public:
 	void Update() override
 	{
 		move();
-		printf("%f \n", HP);
+		//printf("%f \n", HP);
 		CalculateCollider();
 	}
 
