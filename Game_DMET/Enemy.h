@@ -62,7 +62,7 @@ public:
 	{
 		char buffer[80];
 		transform.position = position;
-		transform.localScale = Vector3f(0.25, 0.75, 0.25);
+		transform.localScale = Vector3f(0.75, 2.5, 0.75);
 		walkHopDirection = 0.2f;
 		movementTimer = 150;
 		damage = 5;

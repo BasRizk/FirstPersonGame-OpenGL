@@ -9,6 +9,7 @@ public:
 		char buffer[80];
 		strcpy(buffer, "Textures/ground.bmp");
 		tex.Load(buffer);
+		transform.localScale = Vector3f(2, 1, 2);
 	}
 
 	void RenderGround()

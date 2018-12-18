@@ -257,7 +257,7 @@ public:
 		glDisable(GL_NORMALIZE);
 		glDisable(GL_COLOR_MATERIAL);
 
-		printRect(screenX * 0.01, screenY * 0.07, screenX * 0.07, screenY * 0.05, false, 0.2, 0.2, 0.2, 0, 0, 0);
+		printRect(screenX * 0.01, screenY * 0.07, screenX * 0.1, screenY * 0.05, false, 0.2, 0.2, 0.2, 0, 0, 0);
 		printText(screenX * 0.02, screenY * 0.05, score_print, 1, 1, 1);
 		printRect(screenX * 0.89, screenY * 0.07, screenX * 0.07, screenY * 0.05, false, 0.2, 0.2, 0.2, 0, 0, 0);
 		printText(screenX * 0.90, screenY * 0.05, hp_print, 1, 1, 1);

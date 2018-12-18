@@ -29,7 +29,7 @@ public:
 		spawnTime = 3000;
 		timer = 2000;
 		enemySpeed = 0.05;
-		spawnRadius = 10;
+		spawnRadius = 17;
 	}
 	
 	void Update() override
@@ -37,7 +37,7 @@ public:
 		if (timer < 0)
 		{
 			float angle = rand() % 360;
-			Vector3f position = Vector3f(spawnRadius * cos(DEG2RAD(angle)), 0, spawnRadius * sin(DEG2RAD(angle)));
+			Vector3f position = Vector3f(spawnRadius * cos(DEG2RAD(angle)), 0.5, spawnRadius * sin(DEG2RAD(angle)));
 			
 			Enemy * enemy = new Enemy(enemySpeed, position, player , this);
 
