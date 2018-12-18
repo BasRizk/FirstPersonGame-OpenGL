@@ -118,6 +118,8 @@ public:
 	DIRECTION movementDirection;
 	CameraHolder cameraHolder;
 	GameObject * spawner;
+	GameObject * house;
+	Vector3f newPosition;
 	int HP;
 	int ammo;
 	int score;
@@ -127,9 +129,10 @@ public:
 	{
 		
 	}
-	Player(GameObject * _spawner)
+	Player(GameObject * _spawner , GameObject * _house)
 	{
 		spawner = _spawner;
+		house = _house;
 	
 	}
 
@@ -151,8 +154,8 @@ public:
 
 	void RestartGame()
 	{
-		transform.position = Vector3f(0, 0, 0);
-		speed = 0.1;
+		transform.position = Vector3f(2, 0, 5);
+		speed = 0.07;
 		walkHopDirection = 0.5f;
 		movementTimer = 150;
 		timer = movementTimer;
@@ -165,8 +168,25 @@ public:
 
 	void Update() override
 	{
-		move();
-		CalculateCollider();
+		detectNewPosition();
+		CalculateCollider(newPosition);
+		bool collided = false;
+		for (GameObject * tmp : house->connectedChildren)
+		{
+			if (DetectCollision(tmp->boundryPoints))
+			{
+				collided = true;
+			}
+		}
+		for (GameObject * tmp : house->freeChildren)
+		{
+			if (DetectCollision(tmp->boundryPoints))
+			{
+				collided = true;
+			}
+		}
+		if(collided == false)
+			move(collided);
 	}
 
 	void mainFunc()
@@ -184,9 +204,55 @@ public:
 		}		
 	}
 
-	void move()
+	void detectNewPosition()
 	{
-		
+	
+		Vector3f fwd = transform.Forward() - transform.position;
+		fwd.y = 0;
+		fwd = fwd.unit();
+		switch (movementDirection)
+		{
+
+		case STOP:
+		case FORWARD_BACKWARD:
+		case LEFT_RIGHT:
+			break;
+		case FORWARD:
+		case FORWARD_LEFT_RIGHT:
+
+			newPosition = transform.position +(fwd * speed);
+			//transform.Translate(Vector3f(0, 1, 0) * speed * walkHopDirection);
+			break;
+		case BACKWARD:
+		case BACKWARD_LEFT_RIGHT:
+	
+			newPosition = transform.position + (fwd * -speed);
+			//transform.Translate(Vector3f(0, 1, 0) * speed * walkHopDirection);
+			break;
+		case RIGHT:
+		case FORWARD_BACKWARD_RIGHT:
+
+			fwd = fwd.cross(Vector3f(0, 1, 0));
+			newPosition = transform.position + (fwd.unit() * speed);
+			//transform.Translate(Vector3f(0, 1, 0) * speed * walkHopDirection);
+			break;
+		case LEFT:
+		case FORWARD_BACKWARD_LEFT:
+
+			fwd = fwd.cross(Vector3f(0, 1, 0));
+			newPosition = transform.position + (fwd.unit() * -speed);
+			//transform.Translate(Vector3f(0, 1, 0) * speed * walkHopDirection);
+			break;
+		default:
+			break;
+		}
+	}
+
+	void move(bool collided)
+	{
+		float direction = 1;
+		if (collided)
+			direction = -1;
 		Vector3f fwd = transform.Forward() - transform.position;
 		fwd.y = 0;
 		fwd = fwd.unit();
@@ -233,7 +299,7 @@ public:
 			}
 			else
 				timer -= deltaTime;
-			transform.Translate(fwd * speed);
+			transform.Translate(fwd * speed * direction);
 			transform.Translate(Vector3f(0,1,0) * speed * walkHopDirection);
 			break;
 		case BACKWARD:
@@ -245,7 +311,7 @@ public:
 			}
 			else
 				timer -= deltaTime;
-			transform.Translate(fwd * -speed);
+			transform.Translate(fwd * -speed * direction);
 			transform.Translate(Vector3f(0, 1, 0) * speed * walkHopDirection);
 			break;
 		case RIGHT:
@@ -258,7 +324,7 @@ public:
 			else
 				timer -= deltaTime;
 			fwd = fwd.cross(Vector3f(0,1,0));
-			transform.Translate(fwd.unit() * speed);
+			transform.Translate(fwd.unit() * speed * direction);
 			transform.Translate(Vector3f(0, 1, 0) * speed * walkHopDirection);
 			break;
 		case LEFT:
@@ -271,7 +337,7 @@ public:
 			else
 				timer -= deltaTime;
 			fwd = fwd.cross(Vector3f(0,1,0));
-			transform.Translate(fwd.unit() * -speed);
+			transform.Translate(fwd.unit() * -speed * direction);
 			transform.Translate(Vector3f(0, 1, 0) * speed * walkHopDirection);
 			break;
 		default:

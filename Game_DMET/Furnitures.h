@@ -151,12 +151,42 @@ public:
 	}
 };
 
+class Wall : public GameObject {
+
+public:
+	Wall()
+	{
+
+	}
+	Wall(Vector3f _position, Vector3f _rotation, Vector3f _scale)
+	{
+		transform.position = _position;
+		transform.rotation = _rotation;
+		transform.localScale = _scale;
+	}
+
+	void Update() override
+	{
+		CalculateCollider();
+	}
+
+	void Display() override
+	{
+		//glutSolidCube(1);
+	}
+
+
+};
+
 
 class House : public GameObject {
 public:
 	Model_3DS model3ds;
 	WoodTable table;
 	WoodChair chair;
+	Wall wall1;
+	Wall wall2;
+	Wall wall3;
 
 	House() {
 		char buffer[80];
@@ -166,6 +196,12 @@ public:
 	}
 
 	void Start() override {
+		wall1 = Wall(Vector3f(2, 0, 1.5), Vector3f(0, 0, 0), Vector3f(6, 5, 2));
+		addChild(&wall1, false);
+		wall2 = Wall(Vector3f(3, 0, -2), Vector3f(0, 0, 0), Vector3f(4, 5, 2));
+		addChild(&wall2, false);
+		wall3 = Wall(Vector3f(-2, 0, 0), Vector3f(0, 0, 0), Vector3f(2, 5, 4));
+		addChild(&wall3, false);
 		table = WoodTable();
 		addChild(&table, true);
 		chair = WoodChair();

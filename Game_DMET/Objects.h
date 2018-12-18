@@ -214,8 +214,20 @@ public:
 	virtual void OnDisabled()
 	{ }
 
+	void CalculateCollider(Vector3f position)
+	{
+		boundryPoints[0] = position.x - transform.localScale.x * 0.5f + 100;
+		boundryPoints[1] = position.x + transform.localScale.x * 0.5f + 100;
+		boundryPoints[2] = position.y - transform.localScale.y * 0.5f + 100;
+		boundryPoints[3] = position.y + transform.localScale.y * 0.5f + 100;
+		boundryPoints[4] = position.z - transform.localScale.z * 0.5f + 100;
+		boundryPoints[5] = position.z + transform.localScale.z * 0.5f + 100;
+
+	}
+
 	void CalculateCollider()
 	{
+		CalculateCollider(transform.position);
 		// if (defaultCollider)
 		// {
 		// 	boundryPoints[0] = Vector3(position.x - scale.x * 0.5f, position.y - scale.y * 0.5f, 0);
@@ -233,12 +245,6 @@ public:
 		// }
 
 
-		boundryPoints[0] = transform.position.x - transform.localScale.x * 0.5f + 100;
-		boundryPoints[1] = transform.position.x + transform.localScale.x * 0.5f + 100;
-		boundryPoints[2] = transform.position.y - transform.localScale.y * 0.5f + 100;
-		boundryPoints[3] = transform.position.y + transform.localScale.y * 0.5f + 100;
-		boundryPoints[4] = transform.position.z - transform.localScale.z * 0.5f + 100;
-		boundryPoints[5] = transform.position.z + transform.localScale.z * 0.5f + 100;
 
 
 
