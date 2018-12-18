@@ -16,7 +16,7 @@ public:
 		radius = 4;
 
 		char buffer[80];
-		strcpy(buffer, "Textures/Rustic_Door.bmp");
+		strcpy(buffer, "Textures/wood.bmp");
 		tex.Load(buffer);				
 	}
 

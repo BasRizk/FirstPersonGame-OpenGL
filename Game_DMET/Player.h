@@ -121,6 +121,7 @@ public:
 	int HP;
 	int ammo;
 	int score;
+	GLTexture tex;
 
 	Player()
 	{
@@ -142,6 +143,10 @@ public:
 		cameraHolder = CameraHolder();
 		addChild(&cameraHolder, true);
 		RestartGame();
+
+		char buffer[80];
+		strcpy(buffer, "textures/blu-sky-3.bmp");
+		tex.Load(buffer);
 	}
 
 	void RestartGame()
@@ -303,7 +308,16 @@ public:
 	{
 		glPushMatrix();
 		glTranslated(0, 0, -0.5);
-		glutSolidCube(0.5);
+		/*glutSolidCube(0.5);*/
+
+		GLUquadricObj * qobj;
+		qobj = gluNewQuadric();
+		tex.Use();
+		gluQuadricTexture(qobj, true);
+		gluQuadricNormals(qobj, GL_SMOOTH);
+		gluSphere(qobj, 0.2, 10, 10);
+		gluDeleteQuadric(qobj);
+
 		glPopMatrix();
 	}
 
