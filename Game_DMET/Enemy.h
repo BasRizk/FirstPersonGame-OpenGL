@@ -3,11 +3,16 @@
 
 class EnemyArm : public GameObject {
 	
-
+	GLTexture tex;
 	void Start() override
 	{
+		char buffer[80];
+
 		transform.position = Vector3f(0.6f, 0, 0);
 		transform.localScale = Vector3f(0.2f, 0.5, 0.2f);
+
+		strcpy(buffer, "textures/blu-sky-3.bmp");
+		tex.Load(buffer);
 	}
 
 	void Update() override
@@ -19,8 +24,11 @@ class EnemyArm : public GameObject {
 	{
 		glPushMatrix();
 		glTranslated(0, -0.5, 0);
+		glColor3f(1.0, 0, 0.5);
 		glutSolidCube(1);
+		glColor3f(1, 1, 1);
 		glPopMatrix();
+
 	}
 
 };
@@ -37,6 +45,7 @@ class Enemy : public GameObject {
 	float attackTimer;
 	float attackDefaultTime;
 public:
+	GLTexture tex;
 	Enemy()
 	{
 
@@ -51,8 +60,9 @@ public:
 
 	void Start() override
 	{
+		char buffer[80];
 		transform.position = position;
-		transform.localScale = Vector3f(1, 3, 1);
+		transform.localScale = Vector3f(0.25, 0.75, 0.25);
 		walkHopDirection = 0.2f;
 		movementTimer = 150;
 		damage = 5;
@@ -62,6 +72,9 @@ public:
 		attackTimer = 0;
 		arm = EnemyArm();
 		addChild(&arm, true);
+
+		strcpy(buffer, "textures/Rustic_Door.bmp");
+		tex.Load(buffer);
 	}
 
 	void Update() override
@@ -98,7 +111,15 @@ public:
 	{
 		glPushMatrix();
 		//glColor3d(1, 0, 0);
-		glutSolidCube(1);
+		//glutSolidCube(1);
+
+		GLUquadricObj * qobj;
+		qobj = gluNewQuadric();
+		tex.Use();
+		gluQuadricTexture(qobj, true);
+		//gluQuadricNormals(qobj, GL_SMOOTH);
+		gluSphere(qobj, 0.5, 10, 10);
+		gluDeleteQuadric(qobj);
 		
 		glPopMatrix();
 	}

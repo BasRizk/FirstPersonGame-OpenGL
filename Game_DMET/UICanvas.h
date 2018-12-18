@@ -249,15 +249,31 @@ public:
 		strcat_s(ammo_print, "/");
 		strcat_s(ammo_print, ammo_toString);
 
+		glDisable(GL_DEPTH_TEST);
+		glDisable(GL_LIGHTING);
+		glDisable(GL_LIGHT0);
+		glDisable(GL_LIGHT1);
+		glDisable(GL_LIGHT2);
+		glDisable(GL_NORMALIZE);
+		glDisable(GL_COLOR_MATERIAL);
+
 		printRect(screenX * 0.01, screenY * 0.07, screenX * 0.07, screenY * 0.05, false, 0.2, 0.2, 0.2, 0, 0, 0);
 		printText(screenX * 0.02, screenY * 0.05, score_print, 1, 1, 1);
 		printRect(screenX * 0.89, screenY * 0.07, screenX * 0.07, screenY * 0.05, false, 0.2, 0.2, 0.2, 0, 0, 0);
-		printText(screenX * 0.90, screenY * 0.05, hp_print, 0.7, 0.1, 0.1);
+		printText(screenX * 0.90, screenY * 0.05, hp_print, 1, 1, 1);
 		printRect(screenX * 0.89, screenY * 0.97, screenX * 0.10, screenY * 0.05, false, 0.2, 0.2, 0.2, 0, 0, 0);
 		printText(screenX * 0.90, screenY * 0.95, ammo_print, 1, 1, 1);
 		printHallowCircle(screenX * 0.50, screenY * 0.50, screenX * 0.01, 0, 0, 0);
 		printLine(screenX * 0.50, screenY * 0.50, screenX * 0.01, true, 0, 0, 0);
 		printLine(screenX * 0.50, screenY * 0.50, screenX * 0.01, false, 0, 0, 0);
+
+		glEnable(GL_DEPTH_TEST);
+		glEnable(GL_LIGHTING);
+		glEnable(GL_LIGHT0);
+		glEnable (GL_LIGHT1);
+		glEnable(GL_LIGHT2);
+		glEnable(GL_NORMALIZE);
+		glEnable(GL_COLOR_MATERIAL);
 
 		glColor3f(1, 1, 1);
 	}
